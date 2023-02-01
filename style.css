@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  border: 1px solid black;
+  height: 500px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
+}
+
+.screen {
+  border: 2px solid black;
+  height: 70px;
+  width: 90%;
+  margin-bottom: 15px;
+  background: darkgoldenrod;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.wrapper .numbers {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.button {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  text-align: center;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 25px;
+
+  font-weight: bold;
+}
+
+.operations .button {
+  border-top: none;
+}
+
+.button:hover {
+  background: RGBA(247, 112, 213, 0.28);
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.button:active {
+  scale: 1.1;
+}
