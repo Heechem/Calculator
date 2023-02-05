@@ -47,7 +47,8 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-shrink: 2;
+  word-wrap: break-word;
+  word-break: break-all;
   overflow: hidden;
 }
 

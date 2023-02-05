@@ -6,21 +6,29 @@ const numbers = document.querySelectorAll("[data-input]");
 const erase = document.getElementById("erase");
 const operators = document.querySelectorAll(".operators");
 const decimalPoint = document.getElementById(".");
-console.log(operators);
+const addBtn = document.getElementById("add");
+const operationsWrapper = document.querySelector(".operations");
+const equal = document.getElementById("equal");
 
 let selection1 = [];
 let savedNumbers = [];
+let opsRecord;
+let selection2 = [];
+let results;
 
 class Operator {
+  storageInput;
+
   constructor(a, b) {
     this.a = a;
     this.b = b;
-    this.buttonFct();
+
     this.eraser();
-    this.opsHandle();
+    this.opsfind();
+    this.calculationProcess();
   }
   addition(a, b) {
-    return (this.r = a + b);
+    return a + b;
   }
   substract(a, b) {
     return a - b;
@@ -31,19 +39,6 @@ class Operator {
   divide(a, b) {
     return a / b;
   }
-  // the display function
-  buttonFct() {
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (btn.getAttribute("data-input")) {
-          selection1.push(btn.getAttribute("data-input"));
-          this.handlClick();
-        }
-
-        screen.innerHTML = Number(selection1.join(""));
-      });
-    });
-  }
 
   // enable and disble the decimal seprator
   handlClick() {
@@ -51,6 +46,7 @@ class Operator {
       decimalPoint.classList.add("disabled");
     });
   }
+
   // enable the eraser function C
   eraser() {
     erase.addEventListener("click", () => {
@@ -58,23 +54,104 @@ class Operator {
       selection1 = [];
       decimalPoint.classList.remove("disabled");
       savedNumbers = [];
+      opsRecord;
+      selection2 = [];
     });
   }
 
-  //operators function
-  opsHandle() {
-    operators.forEach((ops) => {
-      ops.addEventListener("click", () => {
-        savedNumbers.push(Number(selection1.join("")));
-        selection1 = [];
-        console.log(savedNumbers);
-        screen.innerHTML = "";
-        if (decimalPoint.classList.contains("disabled")) {
-          decimalPoint.classList.remove("disabled");
-        }
-      });
+  // The operators records
+  opsfind() {
+    operationsWrapper.addEventListener("click", (e) => {
+      let id = e.target.id;
+      if (
+        id === "add" ||
+        id === "sub" ||
+        id === "multiply" ||
+        id === "divide"
+      ) {
+        this.opsRecord = id;
+      }
+
+      console.log(this.opsRecord);
     });
+  }
+
+  // computation process
+  calculationProcess() {
+    let previousOperand;
+    let currentOperand;
+    previousOperand = parseFloat(selection2.join(""));
+    currentOperand = parseFloat(selection1.join(""));
+    if (isNaN(previousOperand) || isNaN(currentOperand)) return;
+    console.log(this.opsRecord);
+    switch (this.opsRecord) {
+      case "add":
+        this.results = this.addition(previousOperand, currentOperand);
+        break;
+      case "sub":
+        this.results = this.substract(previousOperand, currentOperand);
+        break;
+      case "multiply":
+        this.results = this.multiply(previousOperand, currentOperand);
+        break;
+      case "divide":
+        this.results = this.divide(previousOperand, currentOperand);
+        break;
+    }
+    console.log(selection1, selection2);
+    console.log(previousOperand, currentOperand);
+    screen.innerHTML = `${this.results}`;
+    console.log(this.results);
+  }
+  nextStep() {
+    console.log(this.results);
+    selection1 = [];
+    selection1.push(this.results);
   }
 }
 
 const calculation = new Operator();
+
+// the display function
+
+buttons.forEach((btn) => {
+  if (selection1.length === 0) {
+    btn.addEventListener("click", () => {
+      if (btn.getAttribute("data-input")) {
+        selection1.push(btn.getAttribute("data-input"));
+        screen.innerHTML = Number(selection1.join(""));
+      }
+    });
+  } else selection2.push(selection1);
+});
+
+// store the first and second value
+
+operators.forEach((ops) => {
+  ops.addEventListener("click", () => {
+    if (selection2.length === 0) {
+      selection2.push(selection1.join(""));
+
+      selection1 = [];
+
+      screen.innerHTML = "";
+    } else {
+      selection2.splice(0);
+      selection2.push(selection1.join(""));
+      selection1 = [];
+      screen.innerHTML = "";
+    }
+    if (decimalPoint.classList.contains("disabled")) {
+      decimalPoint.classList.remove("disabled");
+    }
+  });
+});
+
+// calculate the result
+
+equal.addEventListener("click", (button) => {
+  calculation.calculationProcess();
+
+  calculation.nextStep();
+  console.log(selection1);
+});
