@@ -28,7 +28,7 @@ class Operator {
     this.b = b;
 
     this.handlClick();
-    this.compute();
+    // this.compute();
   }
   addition(a, b) {
     return a + b;
@@ -58,7 +58,7 @@ class Operator {
     opsRecord = undefined;
     selection1 = [];
     selection2 = [];
-    this.results = "";
+    this.results = undefined;
   }
 
   // computation process
@@ -92,7 +92,7 @@ class Operator {
     screen.innerHTML = `${this.results}`;
   }
   nextStep() {
-    // if (this.results === undefined) return;
+    if (this.results === undefined) return;
     this.opsRecord = "";
 
     selection1 = [];
@@ -100,30 +100,24 @@ class Operator {
     console.log(this.results);
   }
   compute() {
-    equal.addEventListener("click", () => {
-      this.calculationProcess();
-      this.nextStep();
-      console.log(results);
-    });
-
     addBtn.addEventListener("click", () => {
       this.calculationProcess();
       this.nextStep();
     });
-    // subBtn.addEventListener("click", () => {
-    //   this.calculationProcess();
-    //   this.nextStep();
-    // });
-    // multiBtn.addEventListener("click", () => {
-    //   this.calculationProcess();
-    //   this.nextStep();
-    //   console.log(results);
-    // });
-    // divBtn.addEventListener("click", () => {
-    //   this.calculationProcess();
-    //   this.nextStep();
-    //   console.log(results);
-    // });
+    subBtn.addEventListener("click", () => {
+      this.calculationProcess();
+      this.nextStep();
+    });
+    multiBtn.addEventListener("click", () => {
+      this.calculationProcess();
+      this.nextStep();
+      console.log(results);
+    });
+    divBtn.addEventListener("click", () => {
+      this.calculationProcess();
+      this.nextStep();
+      console.log(results);
+    });
   }
 }
 
@@ -177,20 +171,23 @@ firstStep();
 
 // calculate the result
 
-// equal.addEventListener("click", () => {
-//   calculation.calculationProcess();
-//   calculation.nextStep();
-//   console.log(results);
-// });
+equal.addEventListener("click", () => {
+  calculation.calculationProcess();
+  calculation.nextStep();
+  console.log(results);
+});
+calculation.compute();
 
+// the c function to erase everything
 erase.addEventListener("click", () => {
   calculation.eraser();
 });
 
-// operationsWrapper.addEventListener("click", (e) => {
-//   let id = e.target.id;
-//   if (id === "add" || id === "sub" || id === "multiply" || id === "divide") {
-//     opsRecord = id;
-//     console.log(111);
-//   }
-// });
+// event listener for the backspace
+
+window.addEventListener("keydown", (e) => {
+  console.log(e.key);
+  if (e.key === "Backspace") {
+    calculation.eraser();
+  }
+});
