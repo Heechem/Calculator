@@ -16,6 +16,7 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #ddd;
+  flex-direction: column;
 }
 
 .container {
@@ -97,4 +98,8 @@ body {
 
 .disabled {
   pointer-events: none;
+}
+
+footer {
+  margin-top: 10rem;
 }
